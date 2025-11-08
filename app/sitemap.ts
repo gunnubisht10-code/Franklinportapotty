@@ -1,50 +1,34 @@
-
-import { BUSINESS_INFO, CITIES, SERVICES } from '@/lib/constants';
 import { MetadataRoute } from 'next';
+import { BUSINESS_INFO, CITIES, SERVICES } from '@/lib/constants';
 
-export async function GET(): Promise<Response> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
-    '', 
-    '/about/', 
-    '/contact/', 
-    '/services/', 
-    '/service-areas/'
-    // Add other static routes here
+    '/',
+    '/about/',
+    '/contact/',
+    '/services/',
+    '/service-areas/',
   ].map((route) => ({
     url: `${BUSINESS_INFO.base_url}${route}`,
-    lastModified: new Date().toISOString(),
+    lastModified: new Date(),
+    priority: route === '/' ? 1.0 : 0.8,
   }));
 
   const serviceRoutes = SERVICES.map((service) => ({
     url: `${BUSINESS_INFO.base_url}/services/${service.slug}/`,
-    lastModified: new Date().toISOString(),
+    lastModified: new Date(),
+    priority: 0.7,
   }));
 
   const cityRoutes = CITIES.map((city) => ({
     url: `${BUSINESS_INFO.base_url}/service-areas/${city.slug}/`,
-    lastModified: new Date().toISOString(),
+    lastModified: new Date(),
+    priority: 0.6,
   }));
 
-  const allRoutes = [...staticRoutes, ...serviceRoutes, ...cityRoutes];
-
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${allRoutes
-    .map(
-      (route) => `
-    <url>
-      <loc>${route.url}</loc>
-      <lastmod>${route.lastModified}</lastmod>
-      <priority>0.7</priority>
-    </url>
-  `
-    )
-    .join('')}
-</urlset>`;
-
-  return new Response(sitemap, {
-    headers: {
-      'Content-Type': 'application/xml',
-    },
-  });
+  return [
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...cityRoutes,
+  ];
 }
