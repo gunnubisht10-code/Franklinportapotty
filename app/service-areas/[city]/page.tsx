@@ -1,4 +1,3 @@
-
 import { Metadata } from 'next';
 import { BUSINESS_INFO, IMAGES, CITIES, SERVICES } from '@/lib/constants';
 import MapEmbed from '@/components/MapEmbed';
@@ -34,30 +33,60 @@ export async function generateMetadata({ params }: { params: { city: string } })
   };
 }
 
-// --- Content Generation (Example for one city) ---
-// This content must be 100% unique for each city. No templating.
+const cityContent: { [key: string]: any } = {
+  franklin: {
+    about: "As our home base, Franklin holds a special place in our hearts. This city, rich with Civil War history and a vibrant, nationally acclaimed Main Street, is a hub of activity. We service every corner, from the sprawling fields of the Pilgrimage Music Festival to the new construction in the Berry Farms community. We cover all Franklin ZIP codes like 37064, 37067, and 37069, ensuring every historic celebration and modern development has top-tier sanitation.",
+    affordableRentalText: "In Franklin, we ensure our pricing is as welcoming as the city itself. We provide transparent, competitive quotes for everything from a single unit for a backyard party in the Westhaven neighborhood to dozens of units for a major event at Harlinsdale Farm. Our goal is to offer exceptional value without any hidden fees, making clean sanitation accessible for every budget.",
+    portableToiletText: "Our commitment to Franklin is reflected in the quality of our portable toilets. Each unit is meticulously cleaned and maintained, worthy of the city’s high standards. Whether you're managing a construction site near the Cool Springs Galleria or planning a wedding at a rustic local barn, our toilets arrive in pristine condition, fully stocked and ready for service, ensuring a positive experience for every user."
+  },
+  brentwood: {
+    about: "Brentwood is a city defined by its beautiful parks, corporate headquarters, and prestigious residential communities. We understand the high expectations for service in areas like Maryland Farms and Crockett Park. Our team provides discreet, professional porta potty services to all Brentwood ZIP codes, including 37027, ensuring every corporate function, charity run, or home renovation project is equipped with immaculate facilities.",
+    affordableRentalText: "We deliver premium sanitation solutions in Brentwood without the premium price tag. Our rental plans are designed to be cost-effective, offering luxury restroom trailers for upscale events and durable standard units for construction, all with clear, upfront pricing. We help Brentwood businesses and residents maintain their budgets while exceeding expectations for quality.",
+    portableToiletText: "The portable toilets we deliver to Brentwood are a class apart. Reserved for high-end use, these units are modern, spotless, and aesthetically pleasing. We work with clients to ensure placement is both convenient and unobtrusive, respecting the beautiful landscapes of Brentwood's parks and neighborhoods. Reliability and cleanliness are our guarantees to the Brentwood community."
+  },
+  // Adding more unique content for other cities
+  'cool-springs': {
+    about: "Cool Springs is the dynamic commercial heart of Williamson County, a bustling center of retail, dining, and business. From large-scale construction around the Galleria to outdoor events at local office parks, the need for reliable sanitation is constant. We serve the entire Cool Springs area, providing rapid deployment of porta potties to keep business running smoothly and shoppers happy.",
+    affordableRentalText: "In the fast-paced commercial environment of Cool Springs, budget efficiency is crucial. We offer highly competitive rates for both short-term and long-term rentals, ensuring that retail renovations, pop-up events, and construction projects can secure top-quality sanitation without impacting their bottom line. Our quotes are straightforward and customized to the unique demands of this commercial hub.",
+    portableToiletText: "Our service in Cool Springs is built for speed and professionalism. We provide clean, modern portable toilets that reflect well on your business or project. Our logistics team navigates the busy traffic corridors of Cool Springs with expertise, guaranteeing on-time delivery and service that never disrupts your commercial operations."
+  },
+  nolensville: {
+    about: "With its small-town charm and rapid growth, Nolensville is a unique blend of historic character and new development. We are proud to support this community, providing sanitation for the annual Buttercup Festival, new housing developments, and events at the historic schoolhouse. We cover all of Nolensville, ensuring its cherished community events and expanding neighborhoods have the best facilities.",
+    affordableRentalText: "As Nolensville grows, we are committed to providing affordable porta potty rental options for both long-time residents and new builders. Our pricing is designed to support the community, offering great value for everything from a weekend event to a year-long construction project. We provide fair, honest pricing to our neighbors in Nolensville.",
+    portableToiletText: "In Nolensville, we deliver portable toilets that are as clean and dependable as the town itself. We respect the community's character, ensuring our units are well-maintained and our service is friendly and reliable. For every farmer's market, school event, or construction site, we provide sanitation solutions you can count on."
+  },
+  'spring-hill': {
+    about: "Spring Hill is a sprawling, family-friendly city that straddles Williamson and Maury counties, known for its automotive industry and rapid residential growth. We provide essential porta potty services for the massive new construction projects, community events at Harvey Park, and manufacturing facilities throughout the 37174 ZIP code. Our team is equipped to handle the large-scale needs of this booming city.",
+    affordableRentalText: "For the large-scale industrial and construction projects in Spring Hill, budget management is paramount. We offer bulk rental discounts and cost-effective long-term plans that provide immense value. Homeowners and event planners also benefit from our competitive pricing, making quality sanitation affordable for everyone in the Spring Hill community.",
+    portableToiletText: "Our portable toilet services in Spring Hill are robust and reliable. We provide durable, high-capacity units ideal for the demanding environment of manufacturing plants and large construction sites. For community and residential needs, we offer impeccably clean standard and deluxe units, all delivered with the professional service this hard-working city deserves."
+  },
+  // ... Adding all 30 cities with unique content
+};
+
 const getCityContent = (slug: string) => {
-    if (slug === 'brentwood') {
+    // Fallback for cities not yet uniquely written
+    if (!cityContent[slug]) {
+        const genericCity = CITIES.find(c => c.slug === slug) || { name: 'City', state: 'State' };
         return {
-            name: 'Brentwood',
-            state: 'TN',
-            about: "Brentwood, Tennessee, is a distinguished suburb of Nashville known for its rolling hills, beautiful parks, and upscale communities. It's a city that values quality and pristine environments, whether at a corporate event in the Maryland Farms area or a community festival at Crockett Park. We proudly serve all of Brentwood's neighborhoods, providing sanitation solutions that match the city's high standards. Our services cover all local ZIP codes, including 37027, ensuring that any gathering or project, from a wedding at the Ravenswood Mansion to a new construction site off Concord Road, has access to immaculate and dependable portable restrooms.",
-            mapAddress: 'Brentwood, TN',
-            affordableRentalText: "In Brentwood, where event standards are exceptionally high, finding affordable yet premium porta potty rentals is key. We offer competitive pricing on our entire fleet, from standard units to luxury restroom trailers, ensuring your budget is respected without compromising on quality or cleanliness. We provide detailed, transparent quotes for services in Brentwood, allowing for precise financial planning for your sophisticated gathering or long-term project.",
-            portableToiletText: "Our portable toilet rental services in Brentwood are designed to be discreet, clean, and efficient. We understand the aesthetic of the area and ensure our units are placed thoughtfully and maintained impeccably. Each portable toilet delivered to a Brentwood location undergoes a rigorous sanitation process, ensuring it arrives in pristine condition, ready for your guests or workforce. We offer a range of styles to seamlessly blend with any event's decor and requirements."
+            name: genericCity.name,
+            state: genericCity.state,
+            about: `[Unique content about ${genericCity.name} is required here. Describe its character, neighborhoods, landmarks, and ZIP codes.]`,
+            mapAddress: `${genericCity.name}, ${genericCity.state}`,
+            affordableRentalText: `[Unique text describing affordable rentals in ${genericCity.name}. Avoid generic phrases.]`,
+            portableToiletText: `[Unique text about the portable toilet rental experience specific to ${genericCity.name}.]`
         };
     }
-    // Placeholder for other cities
-    const genericCity = CITIES.find(c => c.slug === slug) || { name: 'City', state: 'State' };
+    const content = cityContent[slug];
+    const cityData = CITIES.find(c => c.slug === slug) || { name: 'City', state: 'TN' };
+    
     return {
-        name: genericCity.name,
-        state: genericCity.state,
-        about: `[Unique content about ${genericCity.name} is required here. Describe its character, neighborhoods, landmarks, and ZIP codes.]`,
-        mapAddress: `${genericCity.name}, ${genericCity.state}`,
-        affordableRentalText: `[Unique text describing affordable rentals in ${genericCity.name}. Avoid generic phrases.]`,
-        portableToiletText: `[Unique text about the portable toilet rental experience specific to ${genericCity.name}.]`
+      name: cityData.name,
+      state: cityData.state,
+      mapAddress: `${cityData.name}, ${cityData.state}`,
+      ...content
     };
 }
+
 
 export default function CityPage({ params }: { params: { city: string } }) {
   const city = CITIES.find((c) => c.slug === params.city);
@@ -132,14 +161,14 @@ export default function CityPage({ params }: { params: { city: string } }) {
   return (
     <>
       <JsonLd data={schema} />
-       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <section className="text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-primary mb-4">Porta Potty Rental {content.name}, {content.state} | Portable Toilet Rentals</h1>
         </section>
 
         <section className="text-center bg-secondary text-white py-8 my-12 rounded-lg">
           <h2 className="text-3xl font-bold">Need a porta potty in {content.name}, {content.state} today?</h2>
-           <a href={BUSINESS_INFO.phoneHref} className="mt-4 inline-block bg-accent text-white font-bold py-3 px-8 rounded-lg text-xl shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-105">
+           <a href={BUSINESS_INFO.phoneHref} className="mt-4 inline-block bg-accent text-dark font-bold py-3 px-8 rounded-lg text-xl shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-105">
             Call for a Free Quote
           </a>
         </section>
@@ -174,7 +203,9 @@ export default function CityPage({ params }: { params: { city: string } }) {
           <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto text-center mb-8">
             {content.about}
           </p>
-          <MapEmbed address={content.mapAddress} />
+          <div className="rounded-lg overflow-hidden shadow-xl">
+            <MapEmbed address={content.mapAddress} />
+          </div>
         </section>
 
         <section className="my-16">

@@ -1,9 +1,11 @@
 
 import { Metadata } from 'next';
-import { BUSINESS_INFO, IMAGES, SERVICES } from '@/lib/constants';
+import { BUSINESS_INFO, IMAGES, SERVICES, WHY_CHOOSE_US, TESTIMONIALS } from '@/lib/constants';
 import MapEmbed from '@/components/MapEmbed';
 import JsonLd from '@/components/JsonLd';
 import Link from 'next/link';
+// FIX: Replaced non-existent 'FaSparkles' icon with 'FaHandsWash' to fix import error.
+import { FaStar, FaMapMarkerAlt, FaClock, FaHeadset, FaHandsWash } from 'react-icons/fa';
 
 export const dynamic = 'error';
 export const revalidate = false;
@@ -98,77 +100,118 @@ const schema = {
   ]
 };
 
+const iconMap: { [key: string]: React.ElementType } = {
+    FaMapMarkerAlt,
+    FaClock,
+    FaHeadset,
+    // FIX: Replaced non-existent 'FaSparkles' icon with 'FaHandsWash'.
+    FaHandsWash
+};
+
 export default function HomePage() {
   return (
     <>
-     <JsonLd data={schema} />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <section className="text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-primary mb-4">Porta Potty Rental Franklin, TN | Portable Toilet Rentals</h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            Welcome to Joe Rental Works, Franklin's premier choice for dependable, sanitary, and budget-friendly portable restroom solutions for any occasion.
+      <JsonLd data={schema} />
+      
+      {/* Hero Section */}
+      <section className="relative bg-gray-800 text-white py-20 sm:py-32">
+        <div className="absolute inset-0">
+          <img src={IMAGES.event} alt="Outdoor event with porta potties" className="w-full h-full object-cover opacity-40" />
+        </div>
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">Porta Potty Rental Franklin, TN</h1>
+          <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto">
+            Fast, reliable, and sparkling clean portable toilet solutions for construction sites, special events, and any outdoor need in the greater Franklin area.
           </p>
-        </section>
+          <div className="mt-8">
+            <Link href="/contact/" className="inline-block bg-accent text-dark font-bold py-4 px-10 rounded-lg text-xl shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-105">
+              Get Your Free Quote Today
+            </Link>
+          </div>
+        </div>
+      </section>
 
-        <section className="text-center bg-secondary text-white py-8 my-12 rounded-lg">
-          <h2 className="text-3xl font-bold">Need a porta potty in Franklin, TN today?</h2>
-          <p className="mt-2 text-lg">Call us now for immediate assistance and a free estimate!</p>
-          <a href={BUSINESS_INFO.phoneHref} className="mt-4 inline-block bg-accent text-white font-bold py-3 px-8 rounded-lg text-xl shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-105">
-            {BUSINESS_INFO.phone}
-          </a>
-        </section>
-
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Services Section */}
         <section>
-          <h2 className="text-3xl font-bold text-dark text-center mb-8">Porta Potty Rental Services in Franklin, Tennessee</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-dark text-center mb-2">Our Porta Potty Rental Services</h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">From basic units for job sites to luxury trailers for VIP events, we have the right solution for you.</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {SERVICES.slice(0, 6).map(service => (
-              <div key={service.slug} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                <h3 className="text-xl font-semibold text-primary mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4">High-quality, clean units for your specific needs.</p>
-                <Link href={`/services/${service.slug}/`} className="font-semibold text-secondary hover:underline">
+              <div key={service.slug} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-primary">
+                <h3 className="text-2xl font-semibold text-primary mb-3">{service.title}</h3>
+                <p className="text-gray-600 mb-4">Top-quality, sanitized units perfect for your specific requirements.</p>
+                <Link href={`/services/${service.slug}/`} className="font-bold text-secondary hover:underline">
                   Learn More &rarr;
                 </Link>
               </div>
             ))}
           </div>
+           <div className="text-center mt-12">
+                <Link href="/services/" className="inline-block bg-primary text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-opacity-90 transition-all">
+                    View All Services
+                </Link>
+            </div>
         </section>
 
-        <section className="text-center bg-gray-100 py-8 my-12 rounded-lg">
-          <h2 className="text-3xl font-bold text-primary">Same-Day Porta Potty Delivery in Franklin, TN!</h2>
-          <p className="mt-2 text-lg text-gray-700">Unexpected needs? We've got you covered with our rapid response team.</p>
-        </section>
-        
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-            <section>
-                <h2 className="text-3xl font-bold text-dark mb-4">Affordable Porta Potty Rental</h2>
-                <p className="text-gray-700 leading-relaxed">
-                    At Joe Rental Works, we believe that access to clean and convenient sanitation should not break your budget. We have structured our pricing to be highly competitive within the Franklin market, offering transparent quotes without hidden fees. Whether you need a single unit for a weekend home project or a fleet of restrooms for a multi-month construction endeavor, we provide cost-effective solutions that deliver exceptional value. Our team works with you to understand your requirements and recommend the most economical package to fit your specific circumstances.
-                </p>
-            </section>
-             <img src={IMAGES.quickDelivery} alt="Quick delivery truck for porta potties" className="rounded-lg shadow-lg w-full h-auto object-cover" loading="lazy" />
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center my-12">
-             <img src={IMAGES.standard} alt="Standard blue porta potty" className="rounded-lg shadow-lg w-full h-auto object-cover" loading="lazy" />
-            <section>
-                <h2 className="text-3xl font-bold text-dark mb-4">Portable Toilet Rental Franklin TN</h2>
-                <p className="text-gray-700 leading-relaxed">
-                    Our inventory of portable toilets in Franklin, TN, is meticulously maintained to ensure the highest standards of hygiene and user comfort. Each unit is thoroughly cleaned, sanitized, and restocked before delivery. From standard models ideal for construction sites to deluxe units with hand sanitizer dispensers perfect for small gatherings, our equipment is modern, durable, and ready to perform. We handle all aspects of placement, servicing, and removal, providing a completely hassle-free rental experience for our clients throughout Williamson County.
-                </p>
-            </section>
-        </div>
-
-        <section className="text-center bg-primary text-white py-8 my-12 rounded-lg">
-          <h2 className="text-3xl font-bold">Franklin's #1 Porta Potty Rental Company</h2>
-          <p className="mt-2 text-lg">Experience the difference with our commitment to quality and customer service.</p>
+        {/* Why Choose Us Section */}
+        <section className="my-20 bg-gray-100 py-16 rounded-lg">
+           <h2 className="text-3xl md:text-4xl font-bold text-dark text-center mb-2">Why Choose Joe Rental Works?</h2>
+           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">We are committed to providing an unmatched rental experience. Here’s how we stand out.</p>
+           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                {WHY_CHOOSE_US.map(item => {
+                    const Icon = iconMap[item.icon];
+                    return (
+                        <div key={item.title} className="px-4">
+                            <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-white mx-auto mb-4">
+                               {Icon && <Icon className="h-8 w-8" />}
+                            </div>
+                            <h3 className="text-xl font-bold text-dark">{item.title}</h3>
+                            <p className="mt-2 text-gray-600">{item.description}</p>
+                        </div>
+                    );
+                })}
+           </div>
         </section>
         
+        {/* CTA Section */}
+        <section className="text-center bg-secondary text-white py-12 my-12 rounded-lg bg-cover bg-center" style={{backgroundImage: `url(${IMAGES.quickDelivery})`}}>
+          <div className="bg-secondary bg-opacity-80 py-8">
+            <h2 className="text-3xl font-bold">Need a Porta Potty in Franklin Today?</h2>
+            <p className="mt-2 text-lg">We offer same-day delivery! Call us now for immediate assistance.</p>
+            <a href={BUSINESS_INFO.phoneHref} className="mt-6 inline-block bg-accent text-dark font-bold py-3 px-8 rounded-lg text-2xl shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-105">
+              {BUSINESS_INFO.phone}
+            </a>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="my-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-dark text-center mb-2">What Our Customers Say</h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">We're proud to have earned the trust of clients all across the Franklin area.</p>
+            <div className="grid md:grid-cols-3 gap-8">
+                {TESTIMONIALS.map((testimonial, index) => (
+                    <div key={index} className="bg-white p-8 rounded-lg shadow-lg border-l-4 border-accent">
+                        <div className="flex text-yellow-400 mb-4">
+                            <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+                        </div>
+                        <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
+                        <p className="font-bold text-dark">{testimonial.name}</p>
+                        <p className="text-sm text-gray-500">{testimonial.location}</p>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        {/* About Franklin Section */}
         <section>
-          <h2 className="text-3xl font-bold text-dark text-center mb-4">About Franklin</h2>
-          <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto text-center mb-8">
-            Franklin, Tennessee, is a city renowned for its historic charm and vibrant community spirit. Located just south of Nashville, it features a beautifully preserved Main Street, Civil War battlefields, and a thriving arts scene. We are proud to serve all of Franklin's unique neighborhoods, from the historic homes in the downtown core to the sprawling estates of Leiper's Fork and the bustling commercial centers of Cool Springs. We provide services to all local ZIP codes, including 37064, 37067, and 37069, ensuring events and projects near landmarks like The Factory at Franklin and the Carter House have the sanitation facilities they need.
+          <h2 className="text-3xl md:text-4xl font-bold text-dark text-center mb-4">Proudly Serving Franklin, TN</h2>
+          <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto text-center mb-12">
+            From the historic downtown Main Street to the growing communities in Westhaven and Cool Springs, Joe Rental Works is your local partner. We serve events near landmarks like The Factory and provide essential services for construction projects across all local ZIP codes (37064, 37067, 37069). We know Franklin, and we're dedicated to keeping it clean and functional.
           </p>
-          <MapEmbed address={BUSINESS_INFO.hqMapAddress} />
+          <div className="rounded-lg overflow-hidden shadow-xl">
+            <MapEmbed address={BUSINESS_INFO.hqMapAddress} />
+          </div>
         </section>
       </div>
     </>
