@@ -1,0 +1,427 @@
+/* --- CSS RESET --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- VARIABLES --- */
+:root {
+    --primary: #00529B;
+    --secondary: #00A3E0;
+    --accent: #FFC107;
+    --dark: #212529;
+    --light: #F8F9FA;
+    --white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- GENERAL STYLES --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+}
+
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+a {
+    color: var(--secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2, h3 {
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.5rem; }
+
+section {
+    padding: 4rem 0;
+}
+
+.section-subtitle {
+    color: var(--gray-600);
+    max-width: 600px;
+    margin: 1rem auto 3rem auto;
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.btn:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+}
+.btn-primary { background-color: var(--primary); color: var(--white); }
+.btn-accent { background-color: var(--accent); color: var(--dark); }
+.btn-large { padding: 1rem 2.5rem; font-size: 1.25rem; }
+.btn-xl { padding: 0.75rem 2rem; font-size: 1.5rem; }
+
+
+/* --- HEADER --- */
+.site-header {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.top-bar {
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 0.875rem;
+}
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.top-bar-contact a {
+    color: var(--white);
+    margin-left: 1.5rem;
+}
+.top-bar-contact a:hover {
+    color: var(--accent);
+}
+
+.main-nav {
+    padding: 1rem 0;
+}
+.main-nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+.logo:hover {
+    text-decoration: none;
+}
+.desktop-nav {
+    display: flex;
+    gap: 1.5rem;
+}
+.desktop-nav a {
+    color: var(--dark);
+    font-weight: 500;
+}
+.desktop-nav a:hover {
+    color: var(--primary);
+}
+.mobile-cta { display: none; }
+
+
+/* --- HERO SECTION --- */
+.hero-section {
+    position: relative;
+    color: var(--white);
+    padding: 6rem 0;
+    background-image: url('https://ik.imagekit.io/e5qb76enw/Event%20porta%20potty%20rental.png');
+    background-size: cover;
+    background-position: center;
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--gray-800);
+    opacity: 0.6;
+}
+.hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+}
+.hero-content h1 {
+    font-size: 3.5rem;
+}
+.hero-content p {
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 1rem auto 0 auto;
+}
+.hero-cta {
+    margin-top: 2rem;
+}
+
+/* --- PAGE CONTENT --- */
+.page-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.services-section h2, .testimonials-section h2, .about-franklin-section h2, .why-choose-us-section h2 {
+    text-align: center;
+    color: var(--dark);
+    margin-bottom: 1rem;
+}
+
+/* Services */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+.service-card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--primary);
+    transition: box-shadow 0.3s ease;
+}
+.service-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+.service-card h3 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+}
+.service-card p {
+    color: var(--gray-600);
+    margin-bottom: 1rem;
+}
+.service-card a {
+    font-weight: 700;
+}
+.services-link {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* Why Choose Us */
+.why-choose-us-section {
+    background-color: var(--gray-100);
+    border-radius: 8px;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+.why-choose-us-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+.icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: var(--white);
+    margin: 0 auto 1rem auto;
+    font-size: 2rem;
+}
+.why-choose-us-item h3 {
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+.why-choose-us-item p {
+    color: var(--gray-600);
+}
+
+/* CTA Section */
+.cta-section {
+    color: var(--white);
+    border-radius: 8px;
+    background-image: url('https://ik.imagekit.io/e5qb76enw/quick-delivery-porta-potty-rental.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 0;
+}
+.cta-overlay {
+    background-color: rgba(0, 163, 224, 0.85); /* secondary with opacity */
+    padding: 3rem 1rem;
+    border-radius: 8px;
+}
+.cta-overlay h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+.cta-overlay p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Testimonials */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+.testimonial-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--accent);
+}
+.testimonial-card .stars {
+    color: #f5b014;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+.testimonial-card .quote {
+    color: var(--gray-600);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+.testimonial-card .author {
+    font-weight: 700;
+    color: var(--dark);
+}
+.testimonial-card .location {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+}
+
+/* About Franklin */
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+.map-container iframe {
+    display: block;
+}
+
+/* --- FOOTER --- */
+.site-footer {
+    background-color: var(--dark);
+    color: var(--white);
+    padding-top: 3rem;
+}
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding-bottom: 3rem;
+}
+.footer-column h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+.footer-column p, .footer-column li {
+    color: #adb5bd;
+}
+.footer-column ul {
+    list-style: none;
+}
+.footer-column li {
+    margin-bottom: 0.75rem;
+}
+.footer-column a {
+    color: #adb5bd;
+}
+.footer-column a:hover {
+    color: var(--white);
+}
+.footer-bottom {
+    border-top: 1px solid var(--gray-700);
+    padding: 2rem 0;
+    text-align: center;
+    color: #6c757d;
+}
+.legal-links {
+    margin-top: 0.5rem;
+}
+.legal-links a {
+    color: #6c757d;
+}
+.legal-links a:hover {
+    color: var(--white);
+}
+.legal-links span {
+    margin: 0 0.5rem;
+}
+
+/* --- STICKY CALL BUTTON --- */
+.sticky-call-button {
+    display: none; /* Hidden by default on desktop */
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: var(--primary);
+    color: var(--white);
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    text-decoration: none;
+}
+
+/* --- RESPONSIVE STYLES --- */
+@media (max-width: 1024px) {
+    .services-grid, .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .why-choose-us-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
+    .hero-section { padding: 4rem 0; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .desktop-nav, .header-cta { display: none; }
+    .mobile-cta { display: block; }
+    .top-bar-text { display: none; }
+    .top-bar-content { justify-content: center; }
+
+    .services-grid, .testimonials-grid, .why-choose-us-grid, .footer-content {
+        grid-template-columns: 1fr;
+    }
+    .main-nav-content {
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 769px) {
+    .sticky-call-button {
+        display: none;
+    }
+}
